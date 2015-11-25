@@ -78,6 +78,20 @@ public class Punto1 {
         }
 
     }
+    /*Creacion de funcion recursibas */
+
+    private Zona validate(int inicia, int paso) {
+        Zona MiZone = new Zona(); // Declaro la variable de retorno cuando se retorne  null es porque no es posible obtener un sona con esos parametros
+        int avance = inicia + paso;
+        int sizeTerrenos = Terrenos.size();
+
+        if (avance > sizeTerrenos) {
+            MiZone = null;
+        }
+
+        
+        return MiZone;
+    }
 
     private void print(ArrayList<Zona> lista) {
         /*Imprime en consola*/
