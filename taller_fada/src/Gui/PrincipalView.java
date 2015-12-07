@@ -131,7 +131,12 @@ public class PrincipalView extends javax.swing.JFrame {
     private void jBpunto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBpunto1ActionPerformed
         // TODO add your handling code here:
         Punto1 point = new Punto1(Terrenos);
-        point.calculo();
+              
+        for (int i = 1; i < Terrenos.size(); i++) {
+            point.calculo(2, i);
+        }
+        point.print();
+    
     }//GEN-LAST:event_jBpunto1ActionPerformed
 
     private void jBpunto2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBpunto2ActionPerformed

@@ -10,92 +10,65 @@ package Logica;
  * @author Soporte
  */
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
 public class Punto1 {
 
     private ArrayList<Zona> Terrenos = new ArrayList<>();
-    private ArrayList<Zona> firstOption;
-    private ArrayList<Zona> secondOption;
+    public ArrayList<Zona> firstOption;
     /* Acomuladores de beneficios*/
-    private int primero;
-    private int segundo;
+    private int verificar;
+    private int TerreniSize;
 
     public Punto1(ArrayList<Zona> zonas) {
         firstOption = new ArrayList<>();
-        secondOption = new ArrayList<>();
         this.Terrenos = zonas;
 
-        primero = 0;
-        segundo = 0;
-
+        TerreniSize = Terrenos.size();
     }
 
-    public void calculo() {
-        Zona temp = new Zona();
-        int sizeTerreno = Terrenos.size();
-        if (Terrenos.size() == 0) {
-            JOptionPane.showMessageDialog(null, "Archivo Vacio ó \n Con fomato incompatible", "¡Error de Contenido!", 0);
+    public void calculo(int salto, int ValorI) {
+        int ganancia = 0;
+        int Valor = ValorI;
+        ArrayList<Zona> temporal = new ArrayList<>();
+        for (int i = Valor; i < TerreniSize; i += salto) {
+            System.out.println("Paso: " + i);
+            temporal.add(Terrenos.get(i));
+            ganancia += Terrenos.get(i).getBeneficio();
+            System.out.println("-+-+-+-");
+
+        }
+
+        if (ganancia > verificar) {
+            firstOption = (ArrayList<Zona>) temporal.clone();
+            verificar = ganancia;
+
+            temporal.clear();
+            ganancia = 0;
+            if (salto < TerreniSize) {
+                calculo(salto + 1, Valor);
+            }
         } else {
-            int status = 0; /*status 0 primera supocision status 1 segunda suposicion*/
-            /*Algoritmo O(n)*/
-
-            for (int i = 0; i < sizeTerreno; i++) {
-                temp = Terrenos.get(i);
-                if (status == 0) {
-                    firstOption.add(temp);
-                    primero += temp.getBeneficio();
-                }
-                if (status == 1) {
-                    secondOption.add(temp);
-                    segundo += temp.getBeneficio();
-                }
-                /*Controlador de intercambio de arreglos*/
-                if (status == 1) {
-                    status = 0;
-                } else {
-                    status = 1;
-                }
-
+            // Si no se cumple la condicion reinica la longitud del arreglo
+            temporal.clear();
+            ganancia = 0;
+            if (salto < TerreniSize) {
+                calculo(salto + 1, Valor);
             }
         }
-        if (primero > segundo) {
-
-            System.out.println("Gano el primero \n Beneficio Total: " + primero);
-            print(firstOption);
-            printFile(firstOption);
-        } else if (primero < segundo) {
-            System.out.println("Gano el Segundo \n Beneficio Total: " + segundo);
-            print(secondOption);
-            printFile(secondOption);
-        } else if (primero == segundo) {
-            System.out.println("Se obtiene el mismo beneficio");
-            System.out.println("-+-+ Gano el primero +-+-");
-            print(firstOption);
-            System.out.println("+-+- Gano el Segundo +-+-");
-            print(secondOption);
-
-        }
 
     }
-    /*Creacion de funcion recursibas */
 
-    private Zona validate(int inicia, int paso) {
-        Zona MiZone = new Zona(); // Declaro la variable de retorno cuando se retorne  null es porque no es posible obtener un sona con esos parametros
-        int avance = inicia + paso;
-        int sizeTerrenos = Terrenos.size();
+    /*Creacion de funcion recursivas */
+    private void validate(int inicia, int paso) {
 
-        if (avance > sizeTerrenos) {
-            MiZone = null;
-        }
-
-        
-        return MiZone;
     }
 
-    private void print(ArrayList<Zona> lista) {
+    public void print() {
+        ArrayList<Zona> lista = (ArrayList<Zona>) firstOption.clone();
         /*Imprime en consola*/
+        System.out.println("Imprimir: ");
         for (int i = 0; i < lista.size(); i++) {
+
             System.out.println("Numero de zona: " + lista.get(i).getNumberZone());
             System.out.println("Beneficio: " + lista.get(i).getBeneficio());
             System.out.println("-+-+-+-+-+-+-");
