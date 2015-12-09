@@ -58,8 +58,17 @@ public class Punto1 {
 
     }
 
-    /*Creacion de funcion recursivas */
-    private void validate(int inicia, int paso) {
+    /*Creacion de funcion recursivas esta funcion se encaar de llamar recusivamente la los saltos iteretivos
+    que declare en la funcion */
+    public void Recursiva(int inicia) {
+        int variable = inicia;
+        calculo(2, variable);
+        if (variable < TerreniSize) {
+            variable++;
+            Recursiva(variable);
+            
+
+        }
 
     }
 
