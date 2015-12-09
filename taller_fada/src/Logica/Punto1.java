@@ -18,12 +18,14 @@ public class Punto1 {
     /* Acomuladores de beneficios*/
     private int verificar;
     private int TerreniSize;
+    public long TInicio;
 
     public Punto1(ArrayList<Zona> zonas) {
         firstOption = new ArrayList<>();
         this.Terrenos = zonas;
-
         TerreniSize = Terrenos.size();
+        TInicio = System.currentTimeMillis(); //Tomamos la hora en que inicio el algoritmo y la almacena
+        System.out.println("Logica.Punto1.<init>()" + TInicio);
     }
 
     public void calculo(int salto, int ValorI) {
@@ -31,11 +33,8 @@ public class Punto1 {
         int Valor = ValorI;
         ArrayList<Zona> temporal = new ArrayList<>();
         for (int i = Valor; i < TerreniSize; i += salto) {
-            System.out.println("Paso: " + i);
             temporal.add(Terrenos.get(i));
             ganancia += Terrenos.get(i).getBeneficio();
-            System.out.println("-+-+-+-");
-
         }
 
         if (ganancia > verificar) {
@@ -55,7 +54,7 @@ public class Punto1 {
                 calculo(salto + 1, Valor);
             }
         }
-
+        
     }
 
     /*Creacion de funcion recursivas esta funcion se encaar de llamar recusivamente la los saltos iteretivos
@@ -66,15 +65,14 @@ public class Punto1 {
         if (variable < TerreniSize) {
             variable++;
             Recursiva(variable);
-            
-
         }
-
     }
 
+    /*Comentado para realizar pruebas de eficiencia /*Imprime en consola**/
+ /*
     public void print() {
         ArrayList<Zona> lista = (ArrayList<Zona>) firstOption.clone();
-        /*Imprime en consola*/
+
         System.out.println("Imprimir: ");
         for (int i = 0; i < lista.size(); i++) {
 
@@ -83,9 +81,10 @@ public class Punto1 {
             System.out.println("-+-+-+-+-+-+-");
         }
     }
-
-    private void printFile(ArrayList<Zona> Wlista) {
+     */
+    public void printFile(ArrayList<Zona> Wlista) {
         /*Imprime en Archivo de texto*/
+
         EscribeFichero escribir = new EscribeFichero();
         escribir.setAddelement(Wlista.size());
         escribir.setAddelement(Wlista);

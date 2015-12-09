@@ -24,6 +24,7 @@ public class PrincipalView extends javax.swing.JFrame {
      */
     LeeFichero ficheros;
     ArrayList<Zona> Terrenos;
+    // Captura de tiempo de ejeucucion de la aplicación
 
     public PrincipalView() {
         initComponents();
@@ -42,7 +43,6 @@ public class PrincipalView extends javax.swing.JFrame {
 
         jBcargarArchivo = new javax.swing.JButton();
         jBpunto1 = new javax.swing.JButton();
-        jBpunto2 = new javax.swing.JButton();
         Jltitle = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -58,6 +58,7 @@ public class PrincipalView extends javax.swing.JFrame {
             }
         });
 
+        jBpunto1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jBpunto1.setText("Analizador punto1");
         jBpunto1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jBpunto1.addActionListener(new java.awt.event.ActionListener() {
@@ -66,16 +67,8 @@ public class PrincipalView extends javax.swing.JFrame {
             }
         });
 
-        jBpunto2.setText("Analizador punto2");
-        jBpunto2.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jBpunto2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBpunto2ActionPerformed(evt);
-            }
-        });
-
         Jltitle.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        Jltitle.setText("Taller Funadamentos de analizis de Algorithmos");
+        Jltitle.setText("Taller Funadamentos de analizis de Algoritmo");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -84,31 +77,27 @@ public class PrincipalView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Jltitle, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Jltitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jBpunto2)
-                                .addGap(18, 18, 18)
-                                .addComponent(jBpunto1)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
                         .addComponent(jBcargarArchivo)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(78, 78, 78)
+                .addComponent(jBpunto1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(5, 5, 5)
                 .addComponent(Jltitle, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(4, 4, 4)
                 .addComponent(jBcargarArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBpunto1)
-                    .addComponent(jBpunto2))
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jBpunto1, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                .addGap(16, 16, 16))
         );
 
         pack();
@@ -124,24 +113,24 @@ public class PrincipalView extends javax.swing.JFrame {
             ficheros.setAddresFile(addres);
             Terrenos = ficheros.getTerreno();
         } else {
-            JOptionPane.showMessageDialog(this," No selecciono fichero... ", "Error archivo",0);
+            JOptionPane.showMessageDialog(this, " No selecciono fichero... ", "Error archivo", 0);
         }
     }//GEN-LAST:event_jBcargarArchivoActionPerformed
 
     private void jBpunto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBpunto1ActionPerformed
         // TODO add your handling code here:
-        Punto1 point = new Punto1(Terrenos);
-              
-        for (int i = 1; i < Terrenos.size(); i++) {
-            point.calculo(2, i);
-        }
-        point.print();
-    
-    }//GEN-LAST:event_jBpunto1ActionPerformed
 
-    private void jBpunto2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBpunto2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jBpunto2ActionPerformed
+        Punto1 point = new Punto1(Terrenos);
+        point.Recursiva(0);
+        long TFin = System.currentTimeMillis();
+        System.out.println("Gui.PrincipalView.jBpunto1ActionPerformed()" + TFin);
+        point.printFile(point.firstOption);
+         //Tomamos la hora en que finalizó el algoritmo y la almacenamos en la variable T
+        long tiempo = TFin - point.TInicio; //Calculamos los milisegundos de diferencia
+        System.out.println("Tiempo de ejecución en milisegundos: " + tiempo); //Mostramos en pantalla e
+        
+
+    }//GEN-LAST:event_jBpunto1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -182,6 +171,5 @@ public class PrincipalView extends javax.swing.JFrame {
     private javax.swing.JLabel Jltitle;
     private javax.swing.JButton jBcargarArchivo;
     private javax.swing.JButton jBpunto1;
-    private javax.swing.JButton jBpunto2;
     // End of variables declaration//GEN-END:variables
 }
